@@ -1,0 +1,79 @@
+<%= form_with model: @user do |form| %>
+  <% if user.errors.any? %>
+    <div id="error_explanation">
+      <h2><%= pluralize(user.errors.count, "error") %> prohibited this user from being saved:</h2>
+
+      <ul>
+        <% user.errors.full_messages.each do |message| %>
+          <li><%= message %></li>
+        <% end %>
+      </ul>
+    </div>
+  <% end %>
+
+  <div class="field">
+    <%= form.label :email %>
+    <%= form.text_field :email %>
+  </div>
+
+  <div class="field">
+    <%= form.label :password %>
+    <%= form.password_field :password %>
+  </div>
+
+  <%= form.fields_for :user_profile do |ff| %>
+
+    <div>
+      <%= ff.label :name %>
+      <%= ff.text_field :name %>
+    </div>
+
+    <div>
+      <%= ff.label :dob %>
+      <%= ff.text_field :dob %>
+    </div>
+
+    <div>
+      <%= ff.label :gender %>
+      <%= ff.text_field :gender %>
+    <div>
+
+       <%= ff.fields_for :addresses do |f| %>
+          <div>
+           <%= f.label :street %>
+           <%= f.text_field :street %>
+          </div>
+
+          <div>
+           <%= f.label :city %>
+           <%= f.text_field :city %>
+          </div>
+
+          <div>
+           <%= f.label :state %>
+           <%= f.text_field :state %>
+          </div>
+
+          <div>
+           <%= f.label :latitude %>
+           <%= f.text_field :lat %>
+          </div>
+
+          <div>
+           <%= f.label :longitude %>
+           <%= f.text_field :lon %>
+          </div>
+
+      <% end %>
+
+  <% end %>
+
+
+
+  <div class="actions">
+    <%= form.submit %>
+  </div>
+
+
+
+<% end %>
