@@ -1,27 +1,50 @@
-<p id="notice"><%= notice %></p>
+<div class="container">
+  <h1>Users</h1>
+ <%= form_tag(users_path, method: :get) do %>
+  <%= text_field_tag :term, params[:term] %>
+  <%= submit_tag 'Search', :name => nil %>
+<% end %> 
+  <%= link_to 'New User', new_user_path, class: "btn btn-info btn-sm" %>
+  <br/>
+  <div class="table-wrapper-scroll-y my-custom-scrollbar">
+    <table class="table table-bordered table-hover mb-0" >
+      <thead>
+        <tr>
+          <th scope="col" >Email</th>
+          <th scope="col">Name</th>
+          <th scope="col">DOB</th>
+          <th scope="col">Gender</th>
+          <th scope="col">Addresses</th>
+          <th colspan="3">Modification</th>
+        </tr>
+      </thead>
+      <tbody>
+        <% @users.each do |user| %>
+          <tr>
+            <td><%= user.email %></td>
+            <td><%= user.user_profile.name if user.user_profile %></td>
+            <td><%= user.user_profile.dob if user.user_profile %></td>
+            <td><%= user.user_profile.gender if user.user_profile %></td>
+            <td>
+              <% if user.addresses.present? %>
+                <div class="table-wrapper-scroll-y my-custom-scrollbar">
+   
+                  <% user.addresses.each do |a| %>
+                  <ol>Street: <%= a.street %>, City: <%= a.city %>, State: <%= a.state %>, Latitude: <%= a.lat %>, Longitude: <%= a.lon %> </ol>
+                  <% end %>
+              <% else %>
+                No Address Available
+              <% end %>
+            </td>
 
-<h1>Users</h1>
 
-<table>
-  <thead>
-    <tr>
-      <th>Email</th>
-      <th colspan="3"></th>
-    </tr>
-  </thead>
 
-  <tbody>
-    <% @users.each do |user| %>
-      <tr>
-        <td><%= user.email %></td>
-        <td><%= link_to 'Show', user %></td>
-        <td><%= link_to 'Edit', edit_user_path(user) %></td>
-        <td><%= link_to 'Destroy', user, method: :delete, data: { confirm: 'Are you sure?' } %></td>
-      </tr>
-    <% end %>
-  </tbody>
-</table>
-
-<br>
-
-<%= link_to 'New User', new_user_path %>
+            <td><%= link_to 'Show', user, class: "btn btn-success btn-sm" %></td>
+            <td><%= link_to 'Edit', edit_user_path(user), class: "btn btn-primary btn-sm" %></td>
+            <td><%= link_to 'Destroy', user, method: :delete, data: { confirm: 'Are you sure?' }, class: "btn btn-danger btn-sm" %></td>
+          </tr>
+        <% end %>
+      </tbody>
+    </table>
+  </div>
+</div>

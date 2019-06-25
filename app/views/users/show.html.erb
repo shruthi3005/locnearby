@@ -5,36 +5,37 @@
   <%= @user.email %>
 </p>
 
-
 <p>
-  <strong>Street:</strong>
-  <%= @address.street %>
+  <strong>Name:</strong>
+  <%= @user.user_profile.name rescue nil %>
 </p>
 
 <p>
-  <strong>City:</strong>
-  <%= @address.city %>
+  <strong>Dob:</strong>
+  <%= @user.user_profile.dob rescue nil %>
 </p>
 
 <p>
-  <strong>State:</strong>
-  <%= @address.state %>
+  <strong>Gender:</strong>
+  <%= @user.user_profile.gender rescue nil %>
 </p>
 
-<p>
-  <strong>Latitude:</strong>
-  <%= @address.lat %>
-</p>
 
-<p>
-  <strong>Longitude:</strong>
-  <%= @address.lon %>
-</p>
+ <% if @user.addresses.present? %>
+<% @user.addresses.each do |a| %>
+                
+                      <strong>Street:</strong><%= a.street %></br>
+                     </br><strong>City:</strong><%= a.city %></br>
+                     </br><strong>State:</strong>strong<%= a.state %></br>
+                      </br><strong>Latitude:</strong><%= a.lat %></br>
+                      </br><strong>Longitude:</strong><%= a.lon %></br>
+                  <% end %>
+                </table>
+              <% else %>
+                No Address Available
+              <% end %>
 
-<p>
-  <strong>Email:</strong>
-  <%= @user.email %>
-</p>
+</br>
 
 <%= link_to 'Edit', edit_user_path(@user) %> |
 <%= link_to 'Back', users_path %>

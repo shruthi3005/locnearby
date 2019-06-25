@@ -1,4 +1,4 @@
-<%= form_with model: @user do |form| %>
+<%= form_with model: @user,  local: true do |form| %>
   <% if user.errors.any? %>
     <div id="error_explanation">
       <h2><%= pluralize(user.errors.count, "error") %> prohibited this user from being saved:</h2>
@@ -10,70 +10,65 @@
       </ul>
     </div>
   <% end %>
-
-  <div class="field">
+<div class="field">
     <%= form.label :email %>
     <%= form.text_field :email %>
+</div>
+
+<div class="field">
+    <%= form.label :password %>
+    <%= form.password_field :password %>
+</div>
+
+
+<%= form.fields_for :user_profile do |ff| %>
+
+  <div class="field">
+    <%= ff.label :name %>
+    <%= ff.text_field :name %>
   </div>
 
   <div class="field">
-    <%= form.label :password %>
-    <%= form.password_field :password %>
+    <%= ff.label :dob %>
+    <%= ff.date_field :dob, "data-provide" => 'datepicker' %>
   </div>
 
-  <%= form.fields_for :user_profile do |ff| %>
+  <div class="field">
+    <%= ff.label :gender %>
+    <%= ff.select :gender, %w{Male Female Other}, :prompt => 'Select', required: true %>
+  </div>
+    
 
-    <div>
-      <%= ff.label :name %>
-      <%= ff.text_field :name %>
-    </div>
+<%= ff.fields_for :addresses do |f| %>
 
-    <div>
-      <%= ff.label :dob %>
-      <%= ff.text_field :dob %>
-    </div>
+  <div class="field">
+    <%= f.label :street %>
+    <%= f.text_field :street %>
+  </div>
 
-    <div>
-      <%= ff.label :gender %>
-      <%= ff.text_field :gender %>
-    <div>
+  <div class="field">
+    <%= f.label :city %>
+    <%= f.text_field :city %>
+  </div>
 
-       <%= ff.fields_for :addresses do |f| %>
-          <div>
-           <%= f.label :street %>
-           <%= f.text_field :street %>
-          </div>
+  <div class="field">
+    <%= f.label :state %>
+    <%= f.text_field :state %>
+  </div>
 
-          <div>
-           <%= f.label :city %>
-           <%= f.text_field :city %>
-          </div>
+  <div class="field">
+    <%= f.label :latitude %>
+    <%= f.text_field :lat %>
+  </div>
 
-          <div>
-           <%= f.label :state %>
-           <%= f.text_field :state %>
-          </div>
-
-          <div>
-           <%= f.label :latitude %>
-           <%= f.text_field :lat %>
-          </div>
-
-          <div>
-           <%= f.label :longitude %>
-           <%= f.text_field :lon %>
-          </div>
-
-      <% end %>
-
-  <% end %>
-
-
+  <div class="field">
+    <%= f.label :longitude %>
+    <%= f.text_field :lon %>
+  </div>
+<% end %>
+<% end %>
 
   <div class="actions">
     <%= form.submit %>
   </div>
-
-
-
 <% end %>

@@ -4,12 +4,16 @@ class UsersController < ApplicationController
   # GET /users
   # GET /users.json
   def index
-    @users = User.all
+    if params[:term].present?
+      @users = User.joins(:user_profile).where("user_profiles.name LIKE ? or  users.email LIKE ? or user_profiles.gender LIKE ?",  "%#{params[:term]}%",  "%#{params[:term]}%",  "%#{params[:term]}%")
+    else 
+      @users = User.all 
+    end     
   end
-
   # GET /users/1
   # GET /users/1.json
   def show
+    @user = User.find(params[:id])
   end
 
   # GET /users/new
@@ -47,6 +51,7 @@ class UsersController < ApplicationController
       else
         format.html { render :edit }
         format.json { render json: @user.errors, status: :unprocessable_entity }
+        render action: :edit
       end
     end
   end
@@ -69,6 +74,6 @@ class UsersController < ApplicationController
 
     # Never trust parameters from the scary internet, only allow the white list through.
     def user_params
-      params.require(:user).permit(:email, :password, :user_profile_attributes=> [:user_id, :name, :dob, :gender, :addresses_attributes=>[:street, :city, :state, :lat, :lon]])
+      params.require(:user).permit(:email, :password, :user_profile_attributes=> [:user_id, :name, :dob, :gender, :addresses_attributes=>[:user_profile_id, :street, :city, :state, :lat, :lon]])
  end
 end

@@ -22,9 +22,7 @@ pre {
 a {
   color: #000;
 
-  &:visited {
-    color: #666;
-  }
+  
 
   &:hover {
     color: #fff;
@@ -34,10 +32,12 @@ a {
 
 th {
   padding-bottom: 5px;
+  text-align: center;
 }
 
 td {
   padding: 0 5px 7px;
+   text-align: center;
 }
 
 div {
@@ -81,4 +81,8 @@ div {
 
 label {
   display: block;
+}
+
+.button, .class{
+  float:right;
 }

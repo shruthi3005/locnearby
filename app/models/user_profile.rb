@@ -1,7 +1,7 @@
 class UserProfile < ApplicationRecord
+  validates_presence_of :name
+  validates :gender, presence:true
   belongs_to :user
   has_many :addresses
   accepts_nested_attributes_for :addresses
-  validates :name, presence: true
-  validates :gender, presence: true
 end
